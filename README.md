@@ -11,6 +11,8 @@
 - **Graph Representation**: Nodes and edges are used to represent locations and connections.
 - **Pathfinding Algorithm**: Implements Dijkstra's algorithm to calculate the shortest path between two points.
 - **Interactive Visualization**: Outputs the map with the shortest path highlighted using `folium`.
+- **Tom Tom api**: For real time routing.
+- **Random Node Generation**: Generates random nodes within a specified latitude and longitude range.
 - **HTML Output**: Generates dynamic maps to visualize results.
 
 ---
@@ -43,19 +45,6 @@ Ensure you have Python 3.7 or higher installed. You'll also need the following l
 - `folium`
 - `matplotlib`
 
-### Steps
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Vanshvala23/Map-Visual-Path.git
-   cd Map-Visual-Path
-
-2. Install the required libraries:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
----
 
 ## Usage
 
@@ -77,7 +66,10 @@ python DijikstraPython.py
 
 ### HTML Output
 
-The script generates an HTML file named `OutputMap.html` in the project directory. Open this file in a web browser to visualize the map with the shortest path highlighted.
+The script generates an HTML file named `RouteMap.html` in the project directory. Open this file in a web browser to visualize the map with the shortest path highlighted.
+In the output there are two colors one is Red which is longest path and Blue for shortest path.
+
+The details will be saved in .json file named `RouteInfo.json` in the project directory.
 
 ---
 ### Output

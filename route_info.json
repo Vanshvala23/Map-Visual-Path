@@ -1,0 +1,18 @@
+{
+    "shortest_route": {
+        "lengthInMeters": 200775,
+        "travelTimeInSeconds": 21372,
+        "trafficDelayInSeconds": 0,
+        "trafficLengthInMeters": 0,
+        "departureTime": "2025-01-09T19:52:15+05:30",
+        "arrivalTime": "2025-01-10T01:48:27+05:30"
+    },
+    "longest_route": {
+        "lengthInMeters": 223020,
+        "travelTimeInSeconds": 13384,
+        "trafficDelayInSeconds": 111,
+        "trafficLengthInMeters": 2225,
+        "departureTime": "2025-01-09T19:52:16+05:30",
+        "arrivalTime": "2025-01-09T23:35:19+05:30"
+    }
+}
