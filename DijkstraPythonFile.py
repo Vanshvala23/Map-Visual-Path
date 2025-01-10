@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-from networkx import nodes
 import requests
 import folium
 import os
@@ -20,8 +19,6 @@ def generate_random_nodes(num_nodes=200, lat_range=0.5, lon_range=0.5):
         if 20.5 < lat < 24.0 and 69.5 < lon < 72.5:
             nodes.append({"label": f"Node {i + 1}", "lat": lat, "lon": lon})
     return nodes
-
-
 
 def get_route(start, end, route_type="fastest"):
     url = f"https://api.tomtom.com/routing/1/calculateRoute/{start}:{end}/json"
@@ -57,46 +54,48 @@ def build_route_map(route_data, shortest_route, longest_route):
 
     folium.TileLayer(
         tiles="Stamen Terrain",
-        attr="Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.",
-        control=True,
+        attr="Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
     ).add_to(route_map)
 
     return route_map
 
 def save_route_info(shortest_route, longest_route):
     route_info = {
-        "shortest_route": shortest_route,
-        "longest_route": longest_route,
+        "shortest_route": shortest_route["routes"][0]["summary"],
+        "longest_route": longest_route["routes"][0]["summary"]
     }
-    with open("route_info.json", "w") as f:
-        json.dump(route_info, f)
+    with open("route_info.json", "w") as json_file:
+        json.dump(route_info, json_file, indent=4)
 
 app = Flask(__name__)
+nodes = generate_random_nodes()
 
 @app.route("/")
 def index():
-    nodes = generate_random_nodes()
     return render_template("index.html", nodes=nodes)
 
 @app.route("/generate_routes", methods=["POST"])
 def generate_routes():
-    start_node = request.json.get("start_node")
-    end_node = request.json.get("end_node")
-
-    if start_node is None or end_node is None:
-        return jsonify({"error": "Both start and end nodes must be selected."}), 400
-
     try:
-        start = nodes[start_node]
-        end = nodes[end_node]
+        data = request.json
+        start_idx = int(data["start_node"])
+        end_idx = int(data["end_node"])
+
+        if start_idx == end_idx:
+            return jsonify({"error": "Start and end nodes must be different."}), 400
+
+        start = f"{nodes[start_idx]['lat']},{nodes[start_idx]['lon']}"
+        end = f"{nodes[end_idx]['lat']},{nodes[end_idx]['lon']}"
+
         route_data = get_multiple_routes(start, end)
         shortest_route, longest_route = get_shortest_and_longest_route(route_data)
 
         route_map = build_route_map(route_data, shortest_route, longest_route)
-        route_map_url = route_map.save("route_map.html")
+        route_map.save("static/RouteMap.html")
 
         save_route_info(shortest_route, longest_route)
-        return jsonify({"map_url": "route_map.html"})
+
+        return jsonify({"message": "Routes generated successfully.", "map_url": "/static/RouteMap.html"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
