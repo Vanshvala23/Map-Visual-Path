@@ -1,18 +1,18 @@
 {
     "shortest_route": {
-        "lengthInMeters": 81695,
-        "travelTimeInSeconds": 10621,
-        "trafficDelayInSeconds": 0,
-        "trafficLengthInMeters": 0,
-        "departureTime": "2025-01-10T13:26:44+05:30",
-        "arrivalTime": "2025-01-10T16:23:44+05:30"
+        "lengthInMeters": 281937,
+        "travelTimeInSeconds": 19264,
+        "trafficDelayInSeconds": 117,
+        "trafficLengthInMeters": 244,
+        "departureTime": "2025-01-16T18:49:18+05:30",
+        "arrivalTime": "2025-01-17T00:10:21+05:30"
     },
     "longest_route": {
-        "lengthInMeters": 98894,
-        "travelTimeInSeconds": 7051,
+        "lengthInMeters": 293055,
+        "travelTimeInSeconds": 15800,
         "trafficDelayInSeconds": 0,
         "trafficLengthInMeters": 0,
-        "departureTime": "2025-01-10T13:26:42+05:30",
-        "arrivalTime": "2025-01-10T15:24:13+05:30"
+        "departureTime": "2025-01-16T18:49:14+05:30",
+        "arrivalTime": "2025-01-16T23:12:34+05:30"
     }
 }
