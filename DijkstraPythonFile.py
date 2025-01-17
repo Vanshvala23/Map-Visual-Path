@@ -62,8 +62,7 @@ def generate_routes():
     })
 
 default_location_names = [
-    "Ahmedabad, India", "Vadodara, India", "Surat, India", 
-    "Rajkot, India", "Bhavnagar, India", "Mumbai, India"
+    "Gujarat, India","Mumbai, India","Bangalore, India","Delhi, India"
 ]
 coordinates = [get_coordinates(loc) for loc in default_location_names]
 
