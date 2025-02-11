@@ -4,58 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Route Planner</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center">Route Planner</h1>
-        <form id="routeForm">
-            <div class="mb-4">
-                <label for="startNode" class="form-label">Start Location</label>
-                <select class="form-select" id="startNode" required>
-                    <option value="" selected disabled>Select a start location</option>
-                    {% for location in locations %}
-                        <option value="{{ loop.index0 }}">{{ location }}</option>
+<body class="bg-gray-900 text-white font-sans">
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-gray-800 p-6 flex flex-col justify-between shadow-2xl rounded-l-3xl">
+            <div>
+                <h1 class="text-4xl font-bold text-center text-blue-500 mb-6">Route Planner</h1>
+                
+                <label for="start" class="block text-lg mb-2">Start Location:</label>
+                <select id="start" class="form-select w-full p-2 rounded bg-gray-700 text-white shadow-md">
+                    {% for loc in locations %}
+                    <option value="{{ loop.index0 }}">{{ loc }}</option>
                     {% endfor %}
                 </select>
-            </div>
-            <div class="mb-4">
-                <label for="endNode" class="form-label">End Location</label>
-                <select class="form-select" id="endNode" required>
-                    <option value="" selected disabled>Select an end location</option>
-                    {% for location in locations %}
-                        <option value="{{ loop.index0 }}">{{ location }}</option>
+
+                <label for="end" class="block text-lg mt-4 mb-2">End Location:</label>
+                <select id="end" class="form-select w-full p-2 rounded bg-gray-700 text-white shadow-md">
+                    {% for loc in locations %}
+                    <option value="{{ loop.index0 }}">{{ loc }}</option>
                     {% endfor %}
                 </select>
+
+                <button id="generateRoutes" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg shadow-lg transform hover:scale-105 transition">
+                    Find Routes
+                </button>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Generate Routes</button>
-        </form>
-        <div class="mt-5" id="mapsContainer" style="display: none;">
-            <h2>Route Maps</h2>
-            <h3>Shortest Route</h3>
-            <iframe id="shortestRouteMap" width="100%" height="500px" frameborder="0"></iframe>
-            <h3>Longest Route</h3>
-            <iframe id="longestRouteMap" width="100%" height="500px" frameborder="0"></iframe>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <div id="map" class="w-full h-3/4 rounded-b-3xl shadow-2xl"></div>
+            
+            <!-- Output on the Right Side -->
+            <div id="route-details" class="w-full bg-gray-700 p-6 rounded-t-3xl shadow-xl text-white mt-4">
+                <!-- Route details will be populated here -->
+            </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        document.getElementById("routeForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            const startNode = document.getElementById("startNode").value;
-            const endNode = document.getElementById("endNode").value;
-            axios.post("/generate_routes", { start_node: startNode, end_node: endNode })
-                .then(response => {
-                    const data = response.data;
-                    document.getElementById("shortestRouteMap").src = data.shortest_map_url;
-                    document.getElementById("longestRouteMap").src = data.longest_map_url;
-                    document.getElementById("mapsContainer").style.display = "block";
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert("Failed to generate routes. Please try again.");
-                });
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='map.js') }}"></script>
 </body>
 </html>

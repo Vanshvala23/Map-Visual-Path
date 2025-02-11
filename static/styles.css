@@ -1,0 +1,24 @@
+body {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+}
+
+#map {
+    transform: perspective(1000px) rotateX(20deg);
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.w-1/4 {
+    background: linear-gradient(135deg, #202020, #2a2a2a);
+    box-shadow: inset 0px -3px 15px rgba(0, 0, 0, 0.8);
+}
+
+button {
+    transition: all 0.3s ease-in-out;
+    transform: perspective(500px) translateZ(5px);
+}
+
+button:hover {
+    transform: perspective(500px) translateZ(10px);
+    box-shadow: 0px 5px 20px rgba(0, 0, 255, 0.5);
+}
